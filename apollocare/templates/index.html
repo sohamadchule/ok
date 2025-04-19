@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}ApolloCare Hospital - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1>Compassionate Care, Advanced Medicine</h1>
+        <p class="lead">Serving millions with trust and dedication across India.</p>
+        <a href="{{ url_for('appointment') }}" class="btn btn-primary btn-lg mt-3">Book Your Appointment</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Advanced Medical Care</h5>
+                    <p class="card-text">Our hospital is equipped with state-of-the-art technology and staffed by expert physicians to provide you with the best healthcare services.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Specialized Departments</h5>
+                    <p class="card-text">We offer specialized care across multiple departments including Cardiology, Dermatology, Endocrinology, Gastroenterology, Neurology, Oncology, Orthopedics, Pediatrics, Psychiatry, Radiology, and Urology.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Patient-Centered Approach</h5>
+                    <p class="card-text">We believe in putting our patients first. Our compassionate team works diligently to ensure your comfort and well-being throughout your treatment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- about.html -->
+{% extends "base.html" %}
+
+{% block title %}ApolloCare Hospital - About Us{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">About ApolloCare Hospital</h1>
+    <p>ApolloCare Hospital was established with a vision to provide accessible, high-quality healthcare to all. Since our inception, we have been committed to excellence in patient care, research, and medical education.</p>
+    
+    <h2 class="mt-4">Our Mission</h2>
+    <p>To deliver compassionate, comprehensive healthcare services that enhance the health and well-being of our patients and communities through innovation, excellence, and a commitment to exceptional patient experiences.</p>
+    
+    <h2 class="mt-4">Our Values</h2>
+    <ul>
+        <li><strong>Integrity:</strong> We uphold the highest ethical standards in all our actions.</li>
+        <li><strong>Compassion:</strong> We treat every patient with dignity, respect, and empathy.</li>
+        <li><strong>Excellence:</strong> We strive for continuous improvement and innovation in healthcare delivery.</li>
+        <li><strong>Teamwork:</strong> We collaborate effectively to achieve common goals.</li>
+        <li><strong>Accountability:</strong> We take responsibility for our actions and decisions.</li>
+    </ul>
+    
+    <h2 class="mt-4">Our Facilities</h2>
+    <p>ApolloCare Hospital is equipped with advanced medical technology and facilities, including:</p>
+    <ul>
+        <li>Modern operation theaters</li>
+        <li>Intensive Care Units</li>
+        <li>Advanced diagnostic imaging equipment</li>
+        <li>Well-equipped laboratories</li>
+        <li>Comfortable patient rooms</li>
+        <li>24/7 emergency services</li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}ApolloCare Hospital - Patient Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Welcome, {{ patient.name }}</h1>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Patient Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> {{ patient.id }}</p>
+                    <p><strong>Name:</strong> {{ patient.name }}</p>
+                    <p><strong>Email:</strong> {{ patient.email }}</p>
+                    <p><strong>Age:</strong> {{ patient.age }}</p>
+                    <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                    <p><strong>Phone:</strong> {{ patient.phone }}</p>
+                    <a href="{{ url_for('patient_logout') }}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Recent Medical Records</h5>
+                </div>
+                <div class="card-body">
+                    {% if latest_record %}
+                        <div class="mb-3">
+                            <p><strong>Visit Date:</strong> {{ latest_record.visit_date }}</p>
+                            <p><strong>Doctor:</strong> {{ latest_record.doctor_id }} (lookup name)</p>
+                            <p><strong>Diagnosis:</strong> {{ latest_record.diagnosis }}</p>
+                            <p><strong>History:</strong> {{ latest_record.history }}</p>
+                        </div>
+                    {% else %}
+                        <p>No medical records found.</p>
+                    {% endif %}
+                    <a href="#" class="btn btn-primary">View All Records</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Prescriptions</h5>
+                </div>
+                <div class="card-body">
+                    {% if latest_prescriptions %}
+                        {% for prescription in latest_prescriptions %}
+                            <div class="mb-3">
+                                <p><strong>Medicine:</strong> {{ prescription.medicine_name }}</p>
+                                <p><strong>Dosage:</strong> {{ prescription.dosage }}</p>
+                                <p><strong>Frequency:</strong> {{ prescription.frequency }}</p>
+                                <p><strong>Duration:</strong> {{ prescription.duration }}</p>
+                                <p><strong>Timing:</strong> 
+                                    {% if prescription.morning %}Morning{% endif %}
+                                    {% if prescription.afternoon %}Afternoon{% endif %}
+                                    {% if prescription.evening %}Evening{% endif %}
+                                </p>
+                                <p><strong>Days:</strong> {{ prescription.days }}</p>
+                                <a href="{{ url_for('download_prescription', record_id=prescription.record_id) }}" class="btn btn-sm btn-primary">Download</a>
+                            </div>
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>No prescriptions found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

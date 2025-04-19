@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}ApolloCare Hospital - Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Book an Appointment</h1>
+    
+    <form method="POST" action="{{ url_for('appointment') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="symptoms" class="form-label">Symptoms</label>
+            <textarea class="form-control" id="symptoms" name="symptoms" rows="3" required></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <select class="form-select" id="department" name="department" required>
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                    <option value="{{ department }}">{{ department }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="doctor" class="form-label">Doctor</label>
+            <select class="form-select" id="doctor" name="doctor" required>
+                <option value="">Select Doctor</option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="appointment_date" class="form-label">Appointment Date</label>
+            <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+</div>
+
+{% block scripts %}
+<script>
+    document.getElementById('department').addEventListener('change', function() {
+        const department = this.value;
+        const doctorSelect = document.getElementById('doctor');
+        
+        // Clear current options
+        doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+        
+        if (department) {
+            // Fetch doctors for the selected department
+            fetch(`/doctors/by-department/${department}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(doctor => {
+                        const option = document.createElement('option');
+                        option.value = doctor.id;
+                        option.textContent = doctor.name;
+                        doctorSelect.appendChild(option);
+                    });
+                });
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

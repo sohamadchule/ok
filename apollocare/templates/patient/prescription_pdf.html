@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .hospital-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .hospital-address {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .prescription-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px 0;
+            text-decoration: underline;
+        }
+        .patient-info, .doctor-info {
+            margin-bottom: 20px;
+        }
+        .prescription-details {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+        }
+        .signature {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="hospital-name">ApolloCare Hospital</div>
+        <div class="hospital-address">123 Healthcare Avenue, Medical District, City, State - 110001</div>
+        <div>Phone: +91 1234567890 | Email: info@apollocare.com</div>
+    </div>
+    
+    <div class="prescription-title">PRESCRIPTION</div>
+    
+    <div class="patient-info">
+        <p><strong>Patient Name:</strong> {{ patient.name }}</p>
+        <p><strong>Patient ID:</strong> {{ patient.id }}</p>
+        <p><strong>Age:</strong> {{ patient.age }} years</p>
+        <p><strong>Gender:</strong> {{ patient.gender }}</p>
+    </div>
+    
+    <div class="doctor-info">
+        <p><strong>Doctor:</strong> {{ doctor.name }}</p>
+        <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+        <p><strong>Date:</strong> {{ record.visit_date }}</p>
+    </div>
+    
+    <div class="prescription-details">
+        <h4>Diagnosis</h4>
+        <p>{{ record.diagnosis }}</p>
+        
+        <h4>Medications</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                    <th>Timing</th>
+                    <th>Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prescription in prescriptions %}
+                <tr>
+                    <td>{{ prescription.medicine_name }}</td>
+                    <td>{{ prescription.dosage }}</td>
+                    <td>{{ prescription.frequency }}</td>
+                    <td>{{ prescription.duration }}</td>
+                    <td>
+                        {% if prescription.morning %}Morning{% endif %}
+                        {% if prescription.afternoon %}{% if prescription.morning %}, {% endif %}Afternoon{% endif %}
+                        {% if prescription.evening %}{% if prescription.morning or prescription.afternoon %}, {% endif %}Evening{% endif %}
+                    </td>
+                    <td>{{ prescription.days }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="footer">
+        <div class="signature">
+            <p>Doctor's Signature</p>
+            <br>
+            <p>___________________</p>
+            <p>{{ doctor.name }}</p>
+        </div>
+    </div>
+</body>
+</html>

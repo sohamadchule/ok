@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Dashboard - ApolloCare Hospital{% endblock %}
+
+{% block styles %}
+<style>
+    .dashboard-stat {
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #0056b3;
+    }
+    .staff-actions {
+        margin: 30px 0;
+    }
+    .appointment-card {
+        margin-bottom: 15px;
+        border-left: 4px solid #0056b3;
+    }
+    .pending {
+        border-left-color: #ffc107;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2>Welcome, {{ session['staff_name'] }}</h2>
+        <p>Role: {{ session['staff_role'] }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="dashboard-stat text-center">
+            <h4>Total Patients</h4>
+            <div class="stat-number">{{ patients_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-stat text-center">
+            <h4>Total Doctors</h4>
+            <div class="stat-number">{{ doctors_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-stat text-center">
+            <h4>Total Appointments</h4>
+            <div class="stat-number">{{ appointments_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-stat text-center">
+            <h4>Pending Appointments</h4>
+            <div class="stat-number">{{ pending_appointments }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row staff-actions">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('staff_patients') }}" class="btn btn-primary w-100">Manage Patients</a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('staff_doctors') }}" class="btn btn-primary w-100">Manage Doctors</a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('staff_appointments') }}" class="btn btn-primary w-100">Manage Appointments</a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('get_departments') }}" class="btn btn-primary w-100">View Departments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Recent Appointments</h4>
+            </div>
+            <div class="card-body">
+                {% if appointments %}
+                    {% for appointment in appointments[:5] %}
+                        <div class="card appointment-card {% if appointment.status == 'Pending' %}pending{% endif %}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5>{{ appointment.patient_name }}</h5>
+                                        <p><strong>Doctor:</strong> Dr. {{ appointment.doctor.name }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><strong>Date:</strong> {{ appointment.appointment_date.strftime('%d %b, %Y') }}</p>
+                                        <p><strong>Department:</strong> {{ appointment.department }}</p>
+                                    </div>
+                                    <div class="col-md-4 text-md-end">
+                                        <p><strong>Status:</strong> 
+                                            <span class="badge {% if appointment.status == 'Pending' %}bg-warning{% else %}bg-success{% endif %}">
+                                                {{ appointment.status }}
+                                            </span>
+                                        </p>
+                                        <form method="POST" action="{{ url_for('update_appointment', id=appointment.id) }}" class="d-inline">
+                                            <select name="status" class="form-select form-select-sm mb-2" style="width: auto; display: inline-block;">
+                                                <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                <option value="Confirmed" {% if appointment.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                                <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center">No appointments found.</p>
+                {% endif %}
+                
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('staff_appointments') }}" class="btn btn-outline-primary">View All Appointments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 text-end">
+    <a href="{{ url_for('staff_logout') }}" class="btn btn-danger">Logout</a>
+</div>
+{% endblock %}
