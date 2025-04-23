@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}ApolloCare Hospital - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1>Compassionate Care, Advanced Medicine</h1>
+        <p class="lead">Serving millions with trust and dedication across India.</p>
+        <a href="{{ url_for('appointment') }}" class="btn btn-primary btn-lg mt-3">Book Your Appointment</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Advanced Medical Care</h5>
+                    <p class="card-text">Our hospital is equipped with state-of-the-art technology and staffed by expert physicians to provide you with the best healthcare services.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Specialized Departments</h5>
+                    <p class="card-text">We offer specialized care across multiple departments including Cardiology, Dermatology, Endocrinology, Gastroenterology, Neurology, Oncology, Orthopedics, Pediatrics, Psychiatry, Radiology, and Urology.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Patient-Centered Approach</h5>
+                    <p class="card-text">We believe in putting our patients first. Our compassionate team works diligently to ensure your comfort and well-being throughout your treatment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
